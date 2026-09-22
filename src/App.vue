@@ -1,9 +1,9 @@
 <script setup>
-import ApiDemo from './views/ApiDemo.vue';
+import CharactersList from './views/CharactersList.vue/index.js';
 </script>
 
 <template>
-  <ApiDemo/>
+  <CharactersList/>
 </template>
 
 <style scoped>
