@@ -1,9 +1,9 @@
 <script setup>
-import CharactersList from './views/CharactersList.vue/index.js';
+import HeroList from './views/HeroList.vue';
 </script>
 
 <template>
-  <CharactersList/>
+  <HeroList/>
 </template>
 
 <style scoped>

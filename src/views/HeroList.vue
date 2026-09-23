@@ -18,7 +18,7 @@
   const name = ref('');
   const job = ref('');
   const gender = ref('');
-  const characterList = ref('');
+  const heroList = ref('');
 
   // 4. 定义查询函数
   // async和await搭配使用可以让方法变成一个同步方法，这样处理数据更加直观【解决方法异步问题】
@@ -33,8 +33,8 @@
     // 使用${响应式变量.value}获取值
     // 将响应式变量的值动态拼接到URL路径当中
     // 因为要传递响应式数据作为url拼接参数所以使用模板字符串
-    const result = await axios.get(`http://localhost:8080/character?name=${name.value}&job=${job.value}&gender=${gender.value}`);
-    characterList.value = result.data.data;
+    const result = await axios.get(`http://localhost:8080/heros?name=${name.value}&job=${job.value}&gender=${gender.value}`);
+    heroList.value = result.data.data;
   }
 
   // 页面组件挂载完成后自动调用钩子方法onMounted,我们需要传递一个函数给它，然后它会调用里面的函数
@@ -49,24 +49,17 @@
       <input type="text" id="character" v-model="name">
 
       <label for="gender">性别：</label>
-      <select id="gender"  v-model="gender">
+      <select id="gender" v-model="gender">
         <option value=""></option>
         <option value="1">男</option>
         <option value="2">女</option>
       </select>
 
       <label for="job">职位：</label>
-      <select id="job" v-model="job">
-        <option value=""></option>
-        <option value="1">坦克</option>
-        <option value="2">战士</option>
-        <option value="3">刺客</option>
-        <option value="4">法师</option>
-        <option value="5">射手</option>
-        <option value="6">辅助</option>
-      </select>
+      <input type="text" id="job" v-model="job"/>
 
-      <button type="button" v-on="search">查询</button>
+      <!-- vue的指令v-on:event中的event事件要替换为具体事件 -->
+      <button type="button" v-on:click="search">查询</button>
     </form>
 
     <table>
@@ -79,21 +72,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="character in characterList">
+        <tr v-for="hero in heroList">
           <!-- 插入表达式不能出现在标签内部，所以出现在标签内部的响应式数据使用v-bind命令 -->
-          <td><img v-bind:src="character.img"></td> 
-          <td>{{character.name}}</td>
-          <td>
-            <!-- v-if用来控制标签内容显示或者隐藏，v-show也有类似的作用 -->
-            <span v-if="character.job == 1">坦克</span>
-            <span v-else-if="character.job == 2">战士</span>
-            <span v-else-if="character.job == 3">刺客</span>
-            <span v-else-if="character.job == 4">法师</span>
-            <span v-else-if="character.job == 5">射手</span>
-            <span v-else-if="character.job == 6">辅助</span>
-            <span v-else>其它</span>
-          </td>
-          <td>{{character.gender == 1 ? '男' : '女'}}</td>
+          <td><img v-bind:src="hero.img"></td> 
+          <td>{{hero.name}}</td>
+          <td>{{hero.job}}</td>
+          <td>{{hero.gender == 1 ? '男' : '女'}}</td>
         </tr>
       </tbody>
     </table>
